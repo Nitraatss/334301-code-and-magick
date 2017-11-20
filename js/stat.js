@@ -3,7 +3,7 @@ window.renderStatistics = function(ctx, names, times)
 
 var arrayMaxMin = {
     //поиск максимального элемента в массиве
-    maxiumElementArray: function(arrayMax)
+    findMaxiumElementArray: function(arrayMax)
     {
         var max = arrayMax[0];
         for (i = 1; i < arrayMax.length; i++) {
@@ -13,7 +13,7 @@ var arrayMaxMin = {
     },
     
     //поиск минимального элемента в массиве
-    minimumElementArray: function(arrayMin)
+    findMinimumElementArray: function(arrayMin)
     {
         var min = arrayMin[0];
         for (i = 1; i < arrayMin.length; i++) {
@@ -24,7 +24,7 @@ var arrayMaxMin = {
 }
 
 // Формируем "облако"
-var cloud = function(coordinateX, coordinateY, bias, color)
+var cloudBuild = function(coordinateX, coordinateY, bias, color)
 {
     ctx.fillStyle=color;
     ctx.beginPath();
@@ -41,10 +41,10 @@ var cloud = function(coordinateX, coordinateY, bias, color)
 }
 
 //отображаем тень облака
-cloud(100, 10, 10, "rgba(0, 0, 0, 0.7)");
+cloudBuild(100, 10, 10, "rgba(0, 0, 0, 0.7)");
 
 //отображаем облако
-cloud(100, 10, 0, "#94c6fd");
+cloudBuild(100, 10, 0, "#94c6fd");
 
 //Текст сообщения
 ctx.fillStyle="white";
@@ -62,9 +62,9 @@ var gistogramCoordinateY = 230;
 //расчет дистанции между элементами
 var distancebtwGistogram = gistogramWidth+50;
 //расчет худшего результата
-var worstTime = arrayMaxMin.maxiumElementArray(times);
+var worstTime = arrayMaxMin.findMaxiumElementArray(times);
 //расчет лучшего результата
-var bestTime = arrayMaxMin.minimumElementArray(times);
+var bestTime = arrayMaxMin.findMinimumElementArray(times);
 
 //вывод гистограммы
 for (var j=0; j < times.length; j++)
