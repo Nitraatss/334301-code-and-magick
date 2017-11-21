@@ -9,6 +9,7 @@ window.renderStatistics = function (ctx, names, times) {
       }
       return (max);
     },
+
     //поиск минимального элемента в массиве
     findMinimumElementArray: function (arrayMin) {
       var min = arrayMin[0];
