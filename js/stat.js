@@ -23,12 +23,12 @@ window.renderStatistics = function (ctx, names, times) {
     var cloudBuild = function (coordinateX, coordinateY, bias, color) {
         ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.moveTo(coordinateX+bias,coordinateY+bias);
+        ctx.moveTo(coordinateX + bias, coordinateY + bias);
         ctx.quadraticCurveTo(coordinateX + bias, coordinateY + bias, coordinateX - 10 + bias, coordinateY + 10 + bias);
-        ctx.quadraticCurveTo(coordinateX - 10 +bias, coordinateY + 260 + bias, coordinateX + bias, coordinateY + 270 + bias);
-        ctx.quadraticCurveTo(coordinateX - 10 +bias, coordinateY + 260 + bias, coordinateX + bias, coordinateY + 270 + bias);
+        ctx.quadraticCurveTo(coordinateX - 10 + bias, coordinateY + 260 + bias, coordinateX + bias, coordinateY + 270 + bias);
+        ctx.quadraticCurveTo(coordinateX - 10 + bias, coordinateY + 260 + bias, coordinateX + bias, coordinateY + 270 + bias);
         ctx.quadraticCurveTo(coordinateX + bias, coordinateY + 270 + bias, coordinateX + 205 + bias, coordinateY + 260 + bias);
-        ctx.quadraticCurveTo(coordinateX + 400 + bias, coordinateY + 270 + bias, coordinateX + 410 + bias, coordinateY + 260 +bias);
+        ctx.quadraticCurveTo(coordinateX + 400 + bias, coordinateY + 270 + bias, coordinateX + 410 + bias, coordinateY + 260 + bias);
         ctx.quadraticCurveTo(coordinateX + 410 + bias, coordinateY + 10 + bias, coordinateX + 400 + bias, coordinateY + bias);
         ctx.quadraticCurveTo(coordinateX + 400 + bias, coordinateY + bias, coordinateX + 205 + bias, coordinateY + 10 + bias);
         ctx.closePath();
@@ -36,10 +36,10 @@ window.renderStatistics = function (ctx, names, times) {
     }
 
     //отображаем тень облака
-    cloudBuild (100, 10, 10, "rgba(0, 0, 0, 0.7)");
+    cloudBuild(100, 10, 10, "rgba(0, 0, 0, 0.7)");
 
     //отображаем облако
-    cloudBuild (100, 10, 0, "#94c6fd");
+    cloudBuild(100, 10, 0, "#94c6fd");
 
     //Текст сообщения
     ctx.fillStyle = "white";
@@ -62,22 +62,19 @@ window.renderStatistics = function (ctx, names, times) {
     var bestTime = findArrayMaxMin.findMinimumElementArray(times);
 
     //вывод гистограммы
-    for (var k = 0; k < times.length; ++k)
-    {
+    for (var k = 0; k < times.length; ++k) {
         //специальный цвет для игрока
-        ctx.fillStyle = (names[k] === "Вы") ? "rgba(255, 0, 0, 1)" : ctx.fillStyle="#1cb34d";
+        ctx.fillStyle = (names[k] === "Вы") ? "rgba(255, 0, 0, 1)" : ctx.fillStyle = "#1cb34d";
         //специальный цвет для лучшего времени
-        if (bestTime === times[k])
-        {
+        if (bestTime === times[k]) {
             ctx.fillStyle = "#ffcc00";
-            if (names[k] === "Вы")
-            {
+            if (names[k] === "Вы") {
                 ctx.fillStyle = "rgba(255, 0, 0, 1)";
             }
         }
 
         //расчет позиции элемента
-        var gistogramPositionX = gistogramCoordinateX + distancebtwGistogram*k;
+        var gistogramPositionX = gistogramCoordinateX + distancebtwGistogram * k;
         //расчет высоты элемента
         var calculatedGistogramHeight = Math.floor(gistogramHeight * (times[k] / worstTime));
 
