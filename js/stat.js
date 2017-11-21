@@ -1,7 +1,7 @@
 window.renderStatistics = function (ctx, names, times) {
 
   var findArrayMaxMin = {
-    //поиск максимального элемента в массиве
+    // поиск максимального элемента в массиве
     findMaxiumElementArray: function (arrayMax) {
       var max = arrayMax[0];
       for (var i = 0; i < arrayMax.length; ++i) {
@@ -10,7 +10,7 @@ window.renderStatistics = function (ctx, names, times) {
       return (max);
     },
 
-    //поиск минимального элемента в массиве
+    // поиск минимального элемента в массиве
     findMinimumElementArray: function (arrayMin) {
       var min = arrayMin[0];
       for (var j = 0; j < arrayMin.length; ++j) {
@@ -20,7 +20,7 @@ window.renderStatistics = function (ctx, names, times) {
     }
   }
 
-  // Формируем 'облако'
+  //  Формируем 'облако'
   var cloudBuild = function (coordinateX, coordinateY, bias, color) {
     ctx.fillStyle = color;
     ctx.beginPath();
@@ -36,37 +36,37 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fill();
   }
 
-  //отображаем тень облака
+  // отображаем тень облака
   cloudBuild(100, 10, 10, 'rgba(0, 0, 0, 0.7)');
 
-  //отображаем облако
+  // отображаем облако
   cloudBuild(100, 10, 0, '#94c6fd');
 
-  //Текст сообщения
+  // Текст сообщения
   ctx.fillStyle = 'white';
   ctx.font = '16px PT Mono';
   ctx.textBaseline = 'hanging';
   ctx.fillText('Ура вы победили!', 210, 40);
   ctx.fillText('Список результатов:', 210, 60);
 
-  //параметры гистограммы высота и ширина элементов
+  // параметры гистограммы высота и ширина элементов
   var gistogramHeight = 150;
   var gistogramWidth = 40;
-  //координаты первого элемента
+  // координаты первого элемента
   var gistogramCoordinateX = 140;
   var gistogramCoordinateY = 230;
-  //расчет дистанции между элементами
+  // расчет дистанции между элементами
   var distancebtwGistogram = gistogramWidth + 50;
-  //расчет худшего результата
+  // расчет худшего результата
   var worstTime = findArrayMaxMin.findMaxiumElementArray(times);
-  //расчет лучшего результата
+  // расчет лучшего результата
   var bestTime = findArrayMaxMin.findMinimumElementArray(times);
 
-  //вывод гистограммы
+  // вывод гистограммы
   for (var k = 0; k < times.length; ++k) {
-    //специальный цвет для игрока
+    // специальный цвет для игрока
     ctx.fillStyle = (names[k] === 'Вы') ? 'rgba(255, 0, 0, 1)' : ctx.fillStyle = '#1cb34d';
-    //специальный цвет для лучшего времени
+    // специальный цвет для лучшего времени
     if (bestTime === times[k]) {
       ctx.fillStyle = '#ffcc00';
       if (names[k] === 'Вы') {
@@ -74,18 +74,18 @@ window.renderStatistics = function (ctx, names, times) {
       }
     }
 
-    //расчет позиции элемента
+    // расчет позиции элемента
     var gistogramPositionX = gistogramCoordinateX + distancebtwGistogram * k;
-    //расчет высоты элемента
+    // расчет высоты элемента
     var calculatedGistogramHeight = Math.floor(gistogramHeight * (times[k] / worstTime));
 
-    //отрисовка элемента
+    // отрисовка элемента
     ctx.fillRect(gistogramPositionX, gistogramCoordinateY, gistogramWidth, -calculatedGistogramHeight);
-    //отображение текста
+    // отображение текста
     ctx.fillStyle = 'white';
-    //результат
+    // результат
     ctx.fillText(Math.floor(times[k]), gistogramPositionX, (gistogramCoordinateY - calculatedGistogramHeight));
-    //имя
+    // имя
     ctx.fillText(names[k], gistogramPositionX, (gistogramCoordinateY + 10));
   }
 }
