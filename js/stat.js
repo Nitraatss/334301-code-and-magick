@@ -1,7 +1,7 @@
-window.renderStatistics = function (ctx, names, times) {
-  'use strict';
+'use strict';
 
-  var findArrayMaxMin = {
+window.renderStatistics = function (ctx, names, times) {
+    var findArrayMaxMin = {
     // поиск максимального элемента в массиве
     findMaxiumElementArray: function (arrayMax) {
       var max = arrayMax[0];
