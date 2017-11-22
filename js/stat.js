@@ -1,4 +1,5 @@
 window.renderStatistics = function (ctx, names, times) {
+  'use strict';
 
   var findArrayMaxMin = {
     // поиск максимального элемента в массиве
