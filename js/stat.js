@@ -1,7 +1,7 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
-    var findArrayMaxMin = {
+  var findArrayMaxMin = {
     // поиск максимального элемента в массиве
     findMaxiumElementArray: function (arrayMax) {
       var max = arrayMax[0];
@@ -19,7 +19,7 @@ window.renderStatistics = function (ctx, names, times) {
       }
       return (min);
     }
-  }
+  };
 
   //  Формируем 'облако'
   var cloudBuild = function (coordinateX, coordinateY, bias, color) {
@@ -35,7 +35,7 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.quadraticCurveTo(coordinateX + 400 + bias, coordinateY + bias, coordinateX + 205 + bias, coordinateY + 10 + bias);
     ctx.closePath();
     ctx.fill();
-  }
+  };
 
   // отображаем тень облака
   cloudBuild(100, 10, 10, 'rgba(0, 0, 0, 0.7)');
@@ -89,4 +89,4 @@ window.renderStatistics = function (ctx, names, times) {
     // имя
     ctx.fillText(names[k], gistogramPositionX, (gistogramCoordinateY + 10));
   }
-}
+};
