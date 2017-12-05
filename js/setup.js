@@ -120,7 +120,7 @@
     setupArtifacts.style.outline = '';
 
     // добавлем елемент и проверяем на заполненность ячейку
-    if (ddrop.target.childElementCount < 1 && ddrop.target.nodeName !== 'IMG')  {
+    if (ddrop.target.childElementCount < 1 && ddrop.target.nodeName !== 'IMG') {
       ddrop.target.appendChild(draggedItem.cloneNode(true));
     }
 
