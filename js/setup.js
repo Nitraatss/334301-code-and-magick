@@ -17,7 +17,6 @@
     },
 
     ESC_KEYCODE: 27,
-
     ENTER_KEYCODE: 13
 
   };
@@ -29,6 +28,8 @@
 
   // скрытие меню
   var hideSetupMenu = function () {
+    window.setup.setupMenu().style.left = basicCoordX;
+    window.setup.setupMenu().style.top = basicCoordY;
     (window.setup.setupMenu)().classList.add('hidden');
   };
 
@@ -45,9 +46,16 @@
     }
   };
 
+
   var setupOpen = window.setup.createDOM(document, '.setup-open');
   var setupClose = window.setup.createDOM((window.setup.setupMenu)(), '.setup-close');
   var setupUserName = window.setup.createDOM((window.setup.setupMenu)(), '.setup-user-name');
+  var setupShop = window.setup.createDOM((window.setup.setupMenu)(), '.setup-artifacts-shop');
+  var setupArtifacts = window.setup.createDOM((window.setup.setupMenu)(), '.setup-artifacts');
+
+  // базовая позиция меню
+  var basicCoordX = window.setup.setupMenu().style.left;
+  var basicCoordY = window.setup.setupMenu().style.top;
 
   // отображение меню по нажатию на иконку
   setupOpen.addEventListener('click', function () {
@@ -87,4 +95,48 @@
 
   // отображение информации об ошибках при вводе имени
   setupUserName.addEventListener('invalid', onInputErrors);
+
+  var draggedItem = null;
+
+  // начинаем перетаскивание из магазина 
+  setupShop.addEventListener('dragstart', function (dstart) {
+    if (dstart.target.tagName === 'IMG') {
+      draggedItem = dstart.target;
+      dstart.dataTransfer.setData('text/plain', dstart.target.alt);
+
+      setupArtifacts.style.outline = '2px dashed red';
+    }
+  });
+
+  //  разрешаем перетаскивание в поле арртефактов
+  setupArtifacts.addEventListener('dragover', function (dover) {
+    dover.preventDefault();
+    return false;
+  });
+
+  // сброс элемента
+  setupArtifacts.addEventListener('drop', function (ddrop) {
+    ddrop.target.style.backgroundColor = '';
+    setupArtifacts.style.outline = '';
+
+    // добавлем елемент и проверяем на заполненность ячейку
+    if (ddrop.target.childElementCount < 1 && ddrop.target.nodeName !== 'IMG')  {
+      ddrop.target.appendChild(draggedItem.cloneNode(true));
+    }
+
+    ddrop.preventDefault();
+  });
+
+  //  при наведении меняем рамку
+  setupArtifacts.addEventListener('dragenter', function (ddenter) {
+    ddenter.target.style.backgroundColor = 'yellow';
+    ddenter.preventDefault();
+  });
+
+  //  ушли с элемента
+  setupArtifacts.addEventListener('dragleave', function (dleave) {
+    dleave.target.style.backgroundColor = '';
+    dleave.preventDefault();
+  });
+
 })();
