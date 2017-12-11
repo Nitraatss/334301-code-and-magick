@@ -16,6 +16,24 @@
       return (window.setup.createDOM(document, '.setup'));
     },
 
+    // изменение наполнение элемента
+    fillElement: function (element, fillColor) {
+      element.style.fill = fillColor;
+    },
+
+    // изменение наполнение элемента
+    changeBackgroundElement: function (element, backgroundColor) {
+      element.style.backgroundColor = backgroundColor;
+    },
+
+    // переопределние цвета и вызов функции смены наполнения или фона
+    colorizeElement: function (target, possibleColors, changeTargetColor) {
+      var newColor = possibleColors[window.setup.getRandomArbitrary(0, possibleColors.length)];
+      if (typeof changeTargetColor === 'function') {
+        changeTargetColor(target, newColor);
+      }
+    },
+
     ESC_KEYCODE: 27,
     ENTER_KEYCODE: 13
 

@@ -1,25 +1,21 @@
 'use strict';
 
 (function () {
-// смена цвета плаща
-  var onWizardCoatClick = function (event) {
-    var target = event.target;
-    var coatColorID = window.setup.getRandomArbitrary(0, (window.wizards.coatColorsArr)().length);
-    target.style.fill = (window.wizards.coatColorsArr)()[coatColorID];
+  // смена цвета плаща
+  var onWizardCoatClick = function (coat) {
+    var target = coat.target;
+    window.setup.colorizeElement(target, (window.wizards.coatColorsArr)(), window.setup.fillElement);
   };
 
   // смена цвета глаз
-  var onWizardEyesClick = function (event) {
-    var target = event.target;
-    var eyeColorID = window.setup.getRandomArbitrary(0, (window.wizards.eyesColorsArr)().length);
-    target.style.fill = (window.wizards.eyesColorsArr)()[eyeColorID];
+  var onWizardEyesClick = function (eyes) {
+    var target = eyes.target;
+    window.setup.colorizeElement(target, (window.wizards.eyesColorsArr)(), window.setup.fillElement);
   };
 
   // изменение цвета фаербола
-  var onFireballClick = function (event) {
-    var target = event.target;
-    var fireballID = window.setup.getRandomArbitrary(0, fireballColors.length);
-    target.style.backgroundColor = fireballColors[fireballID];
+  var onFireballClick = function (fireball) {
+    window.setup.colorizeElement(fireball.target, fireballColors, window.setup.changeBackgroundElement);
   };
 
   // цвета фаербола
@@ -39,5 +35,4 @@
 
   // изменение цвета фаербола по клику
   setupFireballWrap.addEventListener('click', onFireballClick);
-}
-)();
+})();
