@@ -2,6 +2,7 @@
 
 (function () {
   window.backend = {
+    // загрузка данных с сервера
     load: function (onLoad, onError) {
       var loadXHR = new XMLHttpRequest();
       var loadURL = 'https://1510.dump.academy/code-and-magick/data';
@@ -24,7 +25,7 @@
         onError('Запрос не успел выполниться за ' + loadXHR.timeout + 'мс');
       });
 
-      loadXHR.timeout = 100000;
+      loadXHR.timeout = 10000;
       loadXHR.open('GET', loadURL);
       loadXHR.send();
     },
@@ -36,7 +37,7 @@
 
       saveXHR.addEventListener('load', function () {
         if (saveXHR.status === 200) {
-          onLoad(saveXHR.response);
+          onLoad();
         } else {
           onError('Неизвестный статус ' + saveXHR.status + ' ' + saveXHR.statusText);
         }

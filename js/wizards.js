@@ -13,33 +13,6 @@
     }
   };
 
-  // Возвращает массив из 4 js объектов
-  /* var generateSimilarWizardsParam = function generateSimilarWizardsParam(names, lastNames, coatColors, eyesColors) {
-    var similarCharacters = [];
-
-    for (var i = 0; i < 4; i++) {
-      var namesID = window.setup.getRandomArbitrary(0, names.length);
-      var name = names[namesID];
-
-      var lastNamesID = window.setup.getRandomArbitrary(0, lastNames.length);
-      var lastName = lastNames[lastNamesID];
-
-      var coatColorID = window.setup.getRandomArbitrary(0, coatColors.length);
-      var coatColor = (window.wizards.coatColorsArr)()[coatColorID];
-
-      var eyeColorID = window.setup.getRandomArbitrary(0, eyesColors.length);
-      var eyeColor = (window.wizards.eyesColorsArr)()[eyeColorID];
-
-      similarCharacters[i] = {
-        wizName: name,
-        wizLastName: lastName,
-        coatColor: coatColor,
-        eyeColor: eyeColor
-      };
-    }
-    return similarCharacters;
-  }; */
-
   // создание одного элемента по шаблону
   var creatTemplate = function creatTemplate(data) {
     var wizard = similazrWizardTemplate.cloneNode(true);
@@ -49,13 +22,6 @@
 
     return (wizard);
   };
-
-  // параметры магов
-  // var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  // var lastNames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-
-  // создание магов
-  // var similarWizards = generateSimilarWizardsParam(names, lastNames, (window.wizards.coatColorsArr)(), (window.wizards.eyesColorsArr)());
 
   // создание DOM элементов
   var setupSimilar = window.setup.createDOM(document, '.setup-similar');
@@ -74,6 +40,10 @@
 
         similarWizardElement.appendChild(fragment);
         setupSimilar.classList.remove('hidden');
+      },
+      function (errorInfo) {
+        // отображение ошибки
+        window.setup.showError(errorInfo);
       }
   );
 })();
