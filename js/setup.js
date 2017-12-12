@@ -64,12 +64,12 @@
     }
   };
 
-
   var setupOpen = window.setup.createDOM(document, '.setup-open');
   var setupClose = window.setup.createDOM((window.setup.setupMenu)(), '.setup-close');
   var setupUserName = window.setup.createDOM((window.setup.setupMenu)(), '.setup-user-name');
   var setupShop = window.setup.createDOM((window.setup.setupMenu)(), '.setup-artifacts-shop');
   var setupArtifacts = window.setup.createDOM((window.setup.setupMenu)(), '.setup-artifacts');
+  var submitButton = window.setup.createDOM((window.setup.setupMenu)(), '.setup-submit');
 
   // базовая позиция меню
   var basicCoordX = window.setup.setupMenu().style.left;
@@ -126,7 +126,7 @@
     }
   });
 
-  //  разрешаем перетаскивание в поле арртефактов
+  // разрешаем перетаскивание в поле арртефактов
   setupArtifacts.addEventListener('dragover', function (dover) {
     dover.preventDefault();
     return false;
@@ -145,16 +145,36 @@
     ddrop.preventDefault();
   });
 
-  //  при наведении меняем рамку
+  // при наведении меняем рамку
   setupArtifacts.addEventListener('dragenter', function (ddenter) {
     ddenter.target.style.backgroundColor = 'yellow';
     ddenter.preventDefault();
   });
 
-  //  ушли с элемента
+  // ушли с элемента
   setupArtifacts.addEventListener('dragleave', function (dleave) {
     dleave.target.style.backgroundColor = '';
     dleave.preventDefault();
+  });
+
+  var menu = window.setup.setupMenu();
+  /*var infromSendSuccess = function (state) {
+    if (state.readyState == )
+  };*/
+
+  // отправка данных
+  submitButton.addEventListener('click', function (sendData) {
+    window.backend.save(new FormData(menu),
+        function (loadInfo) {
+          hideSetupMenu();
+        },
+
+        function (errorInfo) {
+          // отображение ошибки
+        }
+    );
+
+    sendData.preventDefault();
   });
 
 })();

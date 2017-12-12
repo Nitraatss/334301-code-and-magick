@@ -14,7 +14,7 @@
   };
 
   // Возвращает массив из 4 js объектов
-  var generateSimilarWizardsParam = function generateSimilarWizardsParam(names, lastNames, coatColors, eyesColors) {
+  /* var generateSimilarWizardsParam = function generateSimilarWizardsParam(names, lastNames, coatColors, eyesColors) {
     var similarCharacters = [];
 
     for (var i = 0; i < 4; i++) {
@@ -38,36 +38,42 @@
       };
     }
     return similarCharacters;
-  };
+  }; */
 
   // создание одного элемента по шаблону
   var creatTemplate = function creatTemplate(data) {
     var wizard = similazrWizardTemplate.cloneNode(true);
-    window.setup.createDOM(wizard, '.wizard-coat').style.fill = data.coatColor;
-    window.setup.createDOM(wizard, '.wizard-eyes').style.fill = data.eyeColor;
-    window.setup.createDOM(wizard, '.setup-similar-label').textContent = data.wizName + ' ' + data.wizLastName;
+    window.setup.createDOM(wizard, '.wizard-coat').style.fill = data.colorCoat;
+    window.setup.createDOM(wizard, '.wizard-eyes').style.fill = data.colorEyes;
+    window.setup.createDOM(wizard, '.setup-similar-label').textContent = data.name;
 
     return (wizard);
   };
 
   // параметры магов
-  var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var lastNames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+  // var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+  // var lastNames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 
   // создание магов
-  var similarWizards = generateSimilarWizardsParam(names, lastNames, (window.wizards.coatColorsArr)(), (window.wizards.eyesColorsArr)());
+  // var similarWizards = generateSimilarWizardsParam(names, lastNames, (window.wizards.coatColorsArr)(), (window.wizards.eyesColorsArr)());
 
   // создание DOM элементов
   var setupSimilar = window.setup.createDOM(document, '.setup-similar');
   var similarWizardElement = window.setup.createDOM(document, '.setup-similar-list');
   var similazrWizardTemplate = window.setup.createDOM(document, '#similar-wizard-template').content;
 
-  // создание элементов случайных волшебников
-  var fragment = document.createDocumentFragment();
-  for (var k = 0; k < 4; k++) {
-    fragment.appendChild(creatTemplate(similarWizards[k]));
-  }
+  // загрузка волшебников
+  window.backend.load(
+      function (wizards) {
+      // создание элементов случайных волшебников
+        var fragment = document.createDocumentFragment();
+        // отображение 4 случайных волшебников
+        for (var k = 0; k < 4; k++) {
+          fragment.appendChild(creatTemplate(wizards[window.setup.getRandomArbitrary(0, wizards.length)]));
+        }
 
-  similarWizardElement.appendChild(fragment);
-  setupSimilar.classList.remove('hidden');
+        similarWizardElement.appendChild(fragment);
+        setupSimilar.classList.remove('hidden');
+      }
+  );
 })();
