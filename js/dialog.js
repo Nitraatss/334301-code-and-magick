@@ -1,10 +1,10 @@
 'use strict';
 (function () {
-  var setupUser = window.setup.createDOM(document, '.setup-user');
+  var setupUser = window.setup.createDOM(document, '.upload');
 
   // начинаем перепещение по клику на иконку
   setupUser.addEventListener('mousedown', function (dEvent) {
-    event.preventDefault();
+    dEvent.preventDefault();
 
     // задаем стартовые координаты
     var startCoords = {

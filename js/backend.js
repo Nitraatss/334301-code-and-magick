@@ -48,7 +48,7 @@
       });
 
       saveXHR.open('POST', saveURL);
-      saveXHR.send(JSON.stringify(newData));
+      saveXHR.send(newData);
     }
   };
 
