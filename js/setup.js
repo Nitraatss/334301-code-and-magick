@@ -34,6 +34,27 @@
       }
     },
 
+    showError: function (errorMessage) {
+      var node = document.createElement('canvas');
+      node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+      node.style.position = 'absolute';
+      node.style.left = 0;
+      node.style.right = 0;
+      node.width = 500;
+      node.style.fontSize = '30px';
+
+      node.textContent = errorMessage;
+      document.body.insertAdjacentElement('afterbegin', node);
+
+      var ctx = node.getContext('2d');
+
+      // Текст сообщения
+      ctx.fillStyle = 'white';
+      ctx.font = '16px PT Mono';
+      ctx.textBaseline = 'hanging';
+      ctx.fillText(errorMessage, 40, 50);
+    },
+
     ESC_KEYCODE: 27,
     ENTER_KEYCODE: 13
 
@@ -64,12 +85,13 @@
     }
   };
 
-
   var setupOpen = window.setup.createDOM(document, '.setup-open');
   var setupClose = window.setup.createDOM((window.setup.setupMenu)(), '.setup-close');
   var setupUserName = window.setup.createDOM((window.setup.setupMenu)(), '.setup-user-name');
   var setupShop = window.setup.createDOM((window.setup.setupMenu)(), '.setup-artifacts-shop');
   var setupArtifacts = window.setup.createDOM((window.setup.setupMenu)(), '.setup-artifacts');
+  var submitButton = window.setup.createDOM((window.setup.setupMenu)(), '.setup-submit');
+  var formPlayer = window.setup.createDOM((window.setup.setupMenu)(), '.setup-wizard-form');
 
   // базовая позиция меню
   var basicCoordX = window.setup.setupMenu().style.left;
@@ -126,7 +148,7 @@
     }
   });
 
-  //  разрешаем перетаскивание в поле арртефактов
+  // разрешаем перетаскивание в поле арртефактов
   setupArtifacts.addEventListener('dragover', function (dover) {
     dover.preventDefault();
     return false;
@@ -145,16 +167,34 @@
     ddrop.preventDefault();
   });
 
-  //  при наведении меняем рамку
+  // при наведении меняем рамку
   setupArtifacts.addEventListener('dragenter', function (ddenter) {
     ddenter.target.style.backgroundColor = 'yellow';
     ddenter.preventDefault();
   });
 
-  //  ушли с элемента
+  // ушли с элемента
   setupArtifacts.addEventListener('dragleave', function (dleave) {
     dleave.target.style.backgroundColor = '';
     dleave.preventDefault();
+  });
+
+  // отправка данных
+  submitButton.addEventListener('click', function (sendData) {
+    window.backend.save(new FormData(formPlayer),
+        // функция срабатывает при успешной отправке и прячет форму
+        function () {
+          hideSetupMenu();
+        },
+        // функция информирует об ошибке
+        function (errorInfo) {
+          hideSetupMenu();
+          // отображение ошибки
+          window.setup.showError(errorInfo);
+        }
+    );
+
+    sendData.preventDefault();
   });
 
 })();
