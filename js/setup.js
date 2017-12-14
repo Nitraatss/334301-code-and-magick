@@ -34,6 +34,7 @@
       }
     },
 
+    // поле с информацией об ошибке
     showError: function (errorMessage) {
       var node = document.createElement('canvas');
       node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
@@ -55,10 +56,62 @@
       ctx.fillText(errorMessage, 40, 50);
     },
 
+    // ранг по имени если попались два одинаковых ранга
+    sortByName: function (leftName, rightName) {
+      if (leftName > rightName) {
+        return 1;
+      } else if (leftName < rightName) {
+        return -1;
+      } else {
+        return 0;
+      }
+    },
+
+    // вычисление ранга схожести для волшебников
+    rankWizardsParams: function (singleWizard, playerCoat, playerEyes) {
+      var rank = 0;
+
+      if (singleWizard.colorCoat === playerCoat) {
+        rank = rank + 2;
+      }
+
+      if (singleWizard.colorEyes === playerEyes) {
+        rank = rank + 1;
+      }
+
+      return rank;
+    },
+
+    // обновление схожих волшебников
+    updateSimilar: function (data, playerCoat, playerEyes) {
+      var newData = data.sort(function (left, right) {
+        var rankDifference = window.setup.rankWizardsParams(right, playerCoat, playerEyes) - window.setup.rankWizardsParams(left, playerCoat, playerEyes);
+        if (rankDifference === 0) {
+          rankDifference = window.setup.sortByName(left.name, right.name);
+        }
+        return rankDifference;
+      });
+
+      window.render(newData);
+    },
+
+    debounce: function (pauseFunc, pauseTime) {
+      var timeout;
+      if (timeout) {
+        window.clearTimeout(timeout);
+      } else {
+        timeout = window.setTimeout(pauseFunc, pauseTime);
+      }
+    },
+
     ESC_KEYCODE: 27,
-    ENTER_KEYCODE: 13
+    ENTER_KEYCODE: 13,
 
   };
+
+  // базовые данные об игроке
+  window.playerCoatColor = 'rgb(101, 137, 164)';
+  window.playerEyesColor = 'black';
 
   // отображение меню
   var showSetupMenu = function () {

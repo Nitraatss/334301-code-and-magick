@@ -1,49 +1,34 @@
+
 'use strict';
 // создание схожих магов
 (function () {
-
   window.wizards = {
     coatColorsArr: function () {
       var coatColors = 'rgb(101, 137, 164); rgb(241, 43, 107); rgb(146, 100, 161); rgb(56, 159, 117); rgb(215, 210, 55); rgb(0, 0, 0)';
       return (coatColors.split('; '));
     },
+
     eyesColorsArr: function () {
       var eyesColors = 'black red blue yellow green';
       return (eyesColors.split(' '));
-    }
+    },
+
+    // массив для хранения данных о волшебниках
+    allWizards: []
   };
 
-  // создание одного элемента по шаблону
-  var creatTemplate = function creatTemplate(data) {
-    var wizard = similazrWizardTemplate.cloneNode(true);
-    window.setup.createDOM(wizard, '.wizard-coat').style.fill = data.colorCoat;
-    window.setup.createDOM(wizard, '.wizard-eyes').style.fill = data.colorEyes;
-    window.setup.createDOM(wizard, '.setup-similar-label').textContent = data.name;
-
-    return (wizard);
+  // загружаем волшебников и сохраняем их данные в отдельный массив
+  var onLoad = function (data) {
+    window.wizards.allWizards = data;
+    window.render(data);
+    window.setup.updateSimilar(window.wizards.allWizards, window.playerCoatColor, window.playerEyesColor);
   };
 
-  // создание DOM элементов
-  var setupSimilar = window.setup.createDOM(document, '.setup-similar');
-  var similarWizardElement = window.setup.createDOM(document, '.setup-similar-list');
-  var similazrWizardTemplate = window.setup.createDOM(document, '#similar-wizard-template').content;
+  // отображение формы с ошибкой
+  var onError = function (errorInfo) {
+    window.setup.showError(errorInfo);
+  };
 
   // загрузка волшебников
-  window.backend.load(
-      function (wizards) {
-      // создание элементов случайных волшебников
-        var fragment = document.createDocumentFragment();
-        // отображение 4 случайных волшебников
-        for (var k = 0; k < 4; k++) {
-          fragment.appendChild(creatTemplate(wizards[window.setup.getRandomArbitrary(0, wizards.length)]));
-        }
-
-        similarWizardElement.appendChild(fragment);
-        setupSimilar.classList.remove('hidden');
-      },
-      function (errorInfo) {
-        // отображение ошибки
-        window.setup.showError(errorInfo);
-      }
-  );
+  window.backend.load(onLoad, onError);
 })();
