@@ -1,16 +1,37 @@
 'use strict';
 
 (function () {
+  var debounceUpdate = function () {
+    // устранение дребезга
+    var timeout;
+    if (!timeout) {
+      timeout = window.setTimeout(
+          function () {
+            // обновление схожих волшебников
+            window.setup.updateSimilar(window.wizards.allWizards, window.playerCoatColor, window.playerEyesColor);
+          }, 500);
+    } else {
+      window.clearTimeout(timeout);
+    }
+  };
+
   // смена цвета плаща
   var onWizardCoatClick = function (coat) {
     var target = coat.target;
     window.setup.colorizeElement(target, (window.wizards.coatColorsArr)(), window.setup.fillElement);
+    // обновление информации об игроке
+    window.playerCoatColor = target.style.fill;
+    // обновление информации о схожих магах без "дребезга"
+    debounceUpdate();
   };
 
   // смена цвета глаз
   var onWizardEyesClick = function (eyes) {
     var target = eyes.target;
     window.setup.colorizeElement(target, (window.wizards.eyesColorsArr)(), window.setup.fillElement);
+    window.playerEyesColor = target.style.fill;
+    // обновление информации о схожих магах без "дребезга"
+    debounceUpdate();
   };
 
   // изменение цвета фаербола

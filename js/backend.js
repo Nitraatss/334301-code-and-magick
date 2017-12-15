@@ -51,6 +51,4 @@
       saveXHR.send(newData);
     }
   };
-
-
 })();
