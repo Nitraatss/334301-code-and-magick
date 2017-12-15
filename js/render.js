@@ -2,9 +2,9 @@
 
 (function () {
   // создание шаблона 1 волшебника
-  var creatTemplate = function (singleWizzard) {
-    var similazrWizardTemplate = window.setup.createDOM(document, '#similar-wizard-template').content;
-    var wizard = similazrWizardTemplate.cloneNode(true);
+  var createTemplate = function (singleWizzard) {
+    var similarWizardTemplate = window.setup.createDOM(document, '#similar-wizard-template').content;
+    var wizard = similarWizardTemplate.cloneNode(true);
     window.setup.createDOM(wizard, '.wizard-coat').style.fill = singleWizzard.colorCoat;
     window.setup.createDOM(wizard, '.wizard-eyes').style.fill = singleWizzard.colorEyes;
     window.setup.createDOM(wizard, '.setup-similar-label').textContent = singleWizzard.name;
@@ -27,7 +27,7 @@
     var fragment = document.createDocumentFragment();
     // отображение 4 волшебников
     for (var k = 0; k < 4; k++) {
-      fragment.appendChild(creatTemplate(data[k]));
+      fragment.appendChild(createTemplate(data[k]));
     }
 
     similarWizardElement.appendChild(fragment);
